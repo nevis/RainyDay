@@ -22,6 +22,7 @@ public abstract class BaseScene extends Scene {
 		this.activity = resourceManager.activity;
 		this.camera = resourceManager.camera;
 		this.vboManager = resourceManager.vboManager;
+		createScene();
 	}
 
 	public abstract void createScene();

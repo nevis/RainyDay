@@ -16,7 +16,7 @@ public class SplashScene extends BaseScene {
 				pGLState.enableDither();
 			}
 		};
-		splash.setPosition(800 - splash.getWidth(), 480 - splash.getHeight());
+		splash.setPosition((800 - splash.getWidth()) / 2, (480 - splash.getHeight()) / 2);
 		attachChild(splash);
 	}
 

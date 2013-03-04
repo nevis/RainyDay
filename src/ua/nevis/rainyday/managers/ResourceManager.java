@@ -8,7 +8,6 @@ import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegion
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 
-import ua.nevis.rainyday.R;
 import ua.nevis.rainyday.RainyDayActivity;
 
 public class ResourceManager {
