@@ -5,8 +5,13 @@ import org.andengine.engine.camera.Camera;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
+import org.andengine.opengl.texture.atlas.bitmap.BuildableBitmapTextureAtlas;
+import org.andengine.opengl.texture.atlas.bitmap.source.IBitmapTextureAtlasSource;
+import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtlasBuilder;
+import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.debug.Debug;
 
 import ua.nevis.rainyday.RainyDayActivity;
 
@@ -14,6 +19,9 @@ public class ResourceManager {
 	private static ResourceManager INSTANCE = new ResourceManager();
 	private final String GRAPHICS_PATH = "gfx/";
 	private final String IMG_SPLASH = "splash.png";
+	private final String IMG_BACKGROUND = "background.png";
+	private final String IMG_PLAY_BTN = "play_btn.png";
+	private final String IMG_EXIT_BTN = "exit_btn.png";
 	/*
 	 * 
 	 * */
@@ -58,11 +66,30 @@ public class ResourceManager {
 	/*
 	 * Menu resource
 	 */
-	public void loadMenuResource() {
+	public ITextureRegion backgroundRegion;
+	public ITextureRegion playBtnRegion;
+	public ITextureRegion exitRtnRegion;
+	private BuildableBitmapTextureAtlas menuTA;
 
+	public void loadMainMenuResource() {
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(GRAPHICS_PATH);
+		menuTA = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+		backgroundRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTA, activity, IMG_BACKGROUND);
+		playBtnRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTA, activity, IMG_PLAY_BTN);
+		exitRtnRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(menuTA, activity, IMG_EXIT_BTN);
+
+		try {
+			menuTA.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			menuTA.load();
+		} catch (TextureAtlasBuilderException e) {
+			Debug.e(e);
+		}
 	}
 
-	public void unloadMenuResource() {
-
+	public void unloadMainMenuResource() {
+		menuTA.unload();
+		backgroundRegion = null;
+		playBtnRegion = null;
+		exitRtnRegion = null;
 	}
 }

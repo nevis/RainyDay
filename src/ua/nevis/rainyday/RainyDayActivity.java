@@ -16,11 +16,11 @@ import ua.nevis.rainyday.managers.ResourceManager;
 import ua.nevis.rainyday.managers.SceneManager;
 
 public class RainyDayActivity extends BaseGameActivity {
+	public static final int DEFAULT_SCREEN_WIDTH = 800;
+	public static final int DEFAULT_SCREEN_HEIGHT = 480;
 	private final int FPS = 60;
-	public final int DEFAULT_SCREEN_WIDTH = 800;
-	private final int DEFAULT_SCREEN_HEIGHT = 480;
 	private Camera camera;
-	private ResourceManager resourceManager;
+	private SceneManager sceneManager;
 
 	@Override
 	public Engine onCreateEngine(EngineOptions pEngineOptions) {
@@ -40,13 +40,13 @@ public class RainyDayActivity extends BaseGameActivity {
 	@Override
 	public void onCreateResources(OnCreateResourcesCallback pOnCreateResourcesCallback) throws Exception {
 		ResourceManager.prepareManager(mEngine, this, camera, getVertexBufferObjectManager());
-		resourceManager = ResourceManager.getInstance();
 		pOnCreateResourcesCallback.onCreateResourcesFinished();
 	}
 
 	@Override
 	public void onCreateScene(OnCreateSceneCallback pOnCreateSceneCallback) throws Exception {
-		SceneManager.getInstance().createSplashScene(pOnCreateSceneCallback);
+		sceneManager = SceneManager.getInstance();
+		sceneManager.createSplashScene(pOnCreateSceneCallback);
 	}
 
 	@Override
@@ -56,8 +56,10 @@ public class RainyDayActivity extends BaseGameActivity {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				mEngine.unregisterUpdateHandler(pTimerHandler);
-				// load menu
+				sceneManager.createMainMenuScene();
+				sceneManager.disposeSplashScene();
 			}
 		}));
+		pOnPopulateSceneCallback.onPopulateSceneFinished();
 	}
 }
