@@ -9,7 +9,7 @@ import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
 
-import ua.nevis.rainyday.RainyDayActivity;
+import ua.nevis.rainyday.managers.SceneManager;
 
 public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener {
 	private final int PLAY_BTN = 1;
@@ -35,15 +35,15 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	
 	private void createMenu() {
 		menuScene = new MenuScene(camera);
-		menuScene.setPosition(RainyDayActivity.DEFAULT_SCREEN_WIDTH / 2, RainyDayActivity.DEFAULT_SCREEN_HEIGHT / 2);
+		menuScene.setPosition(0, 0);
 		final IMenuItem playMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(PLAY_BTN, resourceManager.playBtnRegion, vboManager), 1.1f, 1.0f);
 		final IMenuItem exitMenuItem = new ScaleMenuItemDecorator(new SpriteMenuItem(EXIT_BTN, resourceManager.exitRtnRegion, vboManager), 1.1f, 1.0f);
 		menuScene.addMenuItem(playMenuItem);
 		menuScene.addMenuItem(exitMenuItem);
 		menuScene.buildAnimations();
 		menuScene.setBackgroundEnabled(false);
-		playMenuItem.setPosition(playMenuItem.getX(), playMenuItem.getY() + 10);
-		exitMenuItem.setPosition(exitMenuItem.getX(), exitMenuItem.getY() - 60);
+		//playMenuItem.setPosition(playMenuItem.getX(), playMenuItem.getY());
+		exitMenuItem.setPosition(exitMenuItem.getX(), exitMenuItem.getY() + 10);
 		menuScene.setOnMenuItemClickListener(this);
 		setChildScene(menuScene);
 	}
@@ -65,7 +65,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 
 	@Override
 	public void onBackKeyPressed() {
-		// TODO Auto-generated method stub
+		
 	}
 
 	@Override
@@ -79,6 +79,8 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		case PLAY_BTN:
 			return true;
 		case EXIT_BTN:
+			SceneManager.getInstance().disposeMainMenuScene();
+			System.exit(0);
 			return true;
 		default:
 			return false;
