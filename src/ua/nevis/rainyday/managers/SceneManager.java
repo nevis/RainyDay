@@ -5,6 +5,7 @@ import org.andengine.ui.IGameInterface.OnCreateSceneCallback;
 
 import ua.nevis.rainyday.scenes.BaseScene;
 import ua.nevis.rainyday.scenes.MainMenuScene;
+import ua.nevis.rainyday.scenes.MissionScene;
 import ua.nevis.rainyday.scenes.SceneType;
 import ua.nevis.rainyday.scenes.SplashScene;
 
@@ -18,7 +19,7 @@ public class SceneManager {
 	 */
 	private BaseScene splashScene;
 	private BaseScene mainMenuScene;
-	private BaseScene loadingScene;
+	private BaseScene missionScene;
 	private BaseScene gameScene;
 
 	private SceneManager() {
@@ -43,8 +44,8 @@ public class SceneManager {
 		case SCENE_MENU:
 			setScene(mainMenuScene);
 			break;
-		case SCENE_LOADING:
-			setScene(loadingScene);
+		case SCENE_MISSION:
+			setScene(missionScene);
 			break;
 		case SCENE_GAME:
 			setScene(gameScene);
@@ -91,5 +92,20 @@ public class SceneManager {
 		ResourceManager.getInstance().unloadMainMenuResource();
 		mainMenuScene.dispose();
 		mainMenuScene = null;
+	}
+
+	/*
+	 * Mission scene
+	 */
+	public void createMissionScene() {
+		ResourceManager.getInstance().loadMissionResource();
+		missionScene = new MissionScene();
+		setScene(missionScene);
+	}
+
+	public void disposeMissionScene() {
+		ResourceManager.getInstance().unloadMissionResource();
+		missionScene.dispose();
+		missionScene = null;
 	}
 }

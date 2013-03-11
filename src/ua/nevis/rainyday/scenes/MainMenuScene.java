@@ -16,14 +16,15 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	private final int EXIT_BTN = 2;
 	private Sprite background;
 	private MenuScene menuScene;
+
 	@Override
 	public void createScene() {
 		createBackground();
 		createMenu();
 	}
-	
+
 	private void createBackground() {
-		background = new Sprite(0, 0, resourceManager.backgroundRegion, vboManager) {
+		background = new Sprite(0, 0, resourceManager.backgroundMenuRegion, vboManager) {
 			@Override
 			protected void preDraw(GLState pGLState, Camera pCamera) {
 				super.preDraw(pGLState, pCamera);
@@ -32,7 +33,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		};
 		attachChild(background);
 	}
-	
+
 	private void createMenu() {
 		menuScene = new MenuScene(camera);
 		menuScene.setPosition(0, 0);
@@ -42,7 +43,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		menuScene.addMenuItem(exitMenuItem);
 		menuScene.buildAnimations();
 		menuScene.setBackgroundEnabled(false);
-		//playMenuItem.setPosition(playMenuItem.getX(), playMenuItem.getY());
+		// playMenuItem.setPosition(playMenuItem.getX(), playMenuItem.getY());
 		exitMenuItem.setPosition(exitMenuItem.getX(), exitMenuItem.getY() + 10);
 		menuScene.setOnMenuItemClickListener(this);
 		setChildScene(menuScene);
@@ -65,7 +66,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 
 	@Override
 	public void onBackKeyPressed() {
-		
+
 	}
 
 	@Override
@@ -77,6 +78,8 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 	public boolean onMenuItemClicked(MenuScene pMenuScene, IMenuItem pMenuItem, float pMenuItemLocalX, float pMenuItemLocalY) {
 		switch (pMenuItem.getID()) {
 		case PLAY_BTN:
+			SceneManager.getInstance().createMissionScene();
+			SceneManager.getInstance().disposeMainMenuScene();
 			return true;
 		case EXIT_BTN:
 			SceneManager.getInstance().disposeMainMenuScene();
