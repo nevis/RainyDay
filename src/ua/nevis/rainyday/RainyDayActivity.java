@@ -14,6 +14,7 @@ import org.andengine.ui.activity.BaseGameActivity;
 
 import android.view.KeyEvent;
 
+import ua.nevis.rainyday.managers.MissionManager;
 import ua.nevis.rainyday.managers.ResourceManager;
 import ua.nevis.rainyday.managers.SceneManager;
 
@@ -58,6 +59,7 @@ public class RainyDayActivity extends BaseGameActivity {
 			@Override
 			public void onTimePassed(TimerHandler pTimerHandler) {
 				mEngine.unregisterUpdateHandler(pTimerHandler);
+				MissionManager.getInstance().loadMission();
 				sceneManager.createMainMenuScene();
 				sceneManager.disposeSplashScene();
 			}

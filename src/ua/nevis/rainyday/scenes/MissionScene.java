@@ -12,6 +12,7 @@ public class MissionScene extends BaseScene {
 	@Override
 	public void createScene() {
 		createBackground();
+		createMissionButtons();
 	}
 
 	private void createBackground() {
@@ -23,6 +24,10 @@ public class MissionScene extends BaseScene {
 			}
 		};
 		attachChild(background);
+	}
+	
+	private void createMissionButtons() {
+		
 	}
 
 	@Override
