@@ -90,7 +90,7 @@ public class SceneManager {
 
 	public void disposeMainMenuScene() {
 		ResourceManager.getInstance().unloadMainMenuResource();
-		mainMenuScene.dispose();
+		mainMenuScene.disposeScene();
 		mainMenuScene = null;
 	}
 
@@ -105,7 +105,7 @@ public class SceneManager {
 
 	public void disposeMissionScene() {
 		ResourceManager.getInstance().unloadMissionResource();
-		missionScene.dispose();
+		missionScene.disposeScene();
 		missionScene = null;
 	}
 }

@@ -1,16 +1,27 @@
 package ua.nevis.rainyday.scenes;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.andengine.engine.camera.Camera;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
 
+import ua.nevis.rainyday.gameobjects.MissionButton;
+import ua.nevis.rainyday.managers.MissionManager;
 import ua.nevis.rainyday.managers.SceneManager;
 
 public class MissionScene extends BaseScene {
+	private MissionManager missionManager;
 	private Sprite background;
+	private List<MissionButton> missionButtons;
+	private final int missionCountInScene = 10;
+	private final int missionCountInRow = 5; 
 
 	@Override
 	public void createScene() {
+		missionManager = MissionManager.getInstance();
+		missionButtons = new ArrayList<MissionButton>();
 		createBackground();
 		createMissionButtons();
 	}
@@ -27,11 +38,33 @@ public class MissionScene extends BaseScene {
 	}
 	
 	private void createMissionButtons() {
-		
+		int delta = 0;
+		int currentMissionCount = missionManager.getMissions().size() >= missionCountInScene ? missionCountInScene : missionManager.getMissions().size();
+		float positionX = 0;
+		float positionY = 140;
+		for (int i = 0; i < currentMissionCount; i++) {
+			if (missionManager.getMissions().get(i).isActive()) {
+				missionButtons.add(new MissionButton(missionManager.getMissions().get(i), 0, 0, resourceManager.missionActiveRegion));
+			} else {
+				missionButtons.add(new MissionButton(missionManager.getMissions().get(i), 0, 0, resourceManager.missionDisactiveRegion));
+			}
+			if (i != 0 && i % missionCountInRow == 0) {
+				positionY += missionButtons.get(i).getHeight() + 5;
+				delta += missionCountInRow;
+			}
+			positionX = (missionButtons.get(i).getWidth() + 5) * (i - delta) + 15;
+			missionButtons.get(i).setPosition(positionX, positionY);
+			attachChild(missionButtons.get(i));
+			registerTouchArea(missionButtons.get(i));
+		}
 	}
 
 	@Override
 	public void disposeScene() {
+		for (MissionButton missionButton : missionButtons) {
+			unregisterTouchArea(missionButton);
+			missionButton.disposeButton();
+		}
 		background.detachSelf();
 		background.dispose();
 		this.detachSelf();

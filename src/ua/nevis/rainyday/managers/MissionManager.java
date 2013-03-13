@@ -39,5 +39,7 @@ public class MissionManager {
 		missions.add(new Mission(false, 5, 100, 50));
 		missions.add(new Mission(false, 6, 120, 60));
 		missions.add(new Mission(false, 7, 140, 70));
+		missions.add(new Mission(false, 8, 140, 70));
+		missions.add(new Mission(false, 9, 140, 70));
 	}
 }
