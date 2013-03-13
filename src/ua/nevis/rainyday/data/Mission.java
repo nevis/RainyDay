@@ -17,6 +17,8 @@ public class Mission {
 		this.missionNumber = missionNumber;
 		this.maxDropCount = maxDropCount;
 		this.completeDropCount = completeDropCount;
+		this.scoreValue = 0;
+		this.starCount = 0;
 	}
 
 	public boolean isActive() {

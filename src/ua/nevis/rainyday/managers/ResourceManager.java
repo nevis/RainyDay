@@ -2,6 +2,9 @@ package ua.nevis.rainyday.managers;
 
 import org.andengine.engine.Engine;
 import org.andengine.engine.camera.Camera;
+import org.andengine.opengl.font.Font;
+import org.andengine.opengl.font.FontFactory;
+import org.andengine.opengl.texture.ITexture;
 import org.andengine.opengl.texture.TextureOptions;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlas;
 import org.andengine.opengl.texture.atlas.bitmap.BitmapTextureAtlasTextureRegionFactory;
@@ -13,11 +16,14 @@ import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
 import org.andengine.util.debug.Debug;
 
+import android.graphics.Color;
+
 import ua.nevis.rainyday.RainyDayActivity;
 
 public class ResourceManager {
 	private static ResourceManager INSTANCE = new ResourceManager();
 	private final String GRAPHICS_PATH = "gfx/";
+	private final String FONT_PATH = "font/";
 	public Engine engine;
 	public RainyDayActivity activity;
 	public Camera camera;
@@ -54,6 +60,7 @@ public class ResourceManager {
 
 	public void unloadSplashResource() {
 		splashTA.unload();
+		splashTA = null;
 		splashRegion = null;
 	}
 
@@ -84,6 +91,7 @@ public class ResourceManager {
 
 	public void unloadMainMenuResource() {
 		menuTA.unload();
+		menuTA = null;
 		backgroundMenuRegion = null;
 		playBtnRegion = null;
 		exitRtnRegion = null;
@@ -97,14 +105,17 @@ public class ResourceManager {
 	private final String IMG_MISSION_DISACTIVE = "mission_disactive_btn.png";
 	private final String IMG_STAR_YELLOW = "star_yellow.png";
 	private final String IMG_STAR_GREY = "star_grey.png";
+	private final String FONT_PAINTDRP = "Paintdrp.ttf";
 	private BuildableBitmapTextureAtlas missionTA;
 	public ITextureRegion backgroundMissionRegion;
 	public ITextureRegion missionActiveRegion;
 	public ITextureRegion missionDisactiveRegion;
 	public ITextureRegion starYellowRegion;
 	public ITextureRegion starGreyRegion;
+	public Font paintdrpFont;
 
 	public void loadMissionResource() {
+		// textures
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(GRAPHICS_PATH);
 		missionTA = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
 		backgroundMissionRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(missionTA, activity, IMG_BACKGROUND_MISSION);
@@ -118,14 +129,22 @@ public class ResourceManager {
 		} catch (TextureAtlasBuilderException e) {
 			Debug.e(e);
 		}
+		// fonts
+		FontFactory.setAssetBasePath(FONT_PATH);
+		final ITexture fontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR);
+		paintdrpFont = FontFactory.createFromAsset(activity.getFontManager(), fontTexture, activity.getAssets(), FONT_PAINTDRP, 24, true, Color.WHITE);
+		paintdrpFont.load();
 	}
 
 	public void unloadMissionResource() {
 		missionTA.unload();
+		missionTA = null;
 		backgroundMissionRegion = null;
 		missionActiveRegion = null;
 		missionDisactiveRegion = null;
 		starYellowRegion = null;
 		starGreyRegion = null;
+		paintdrpFont.unload();
+		paintdrpFont = null;
 	}
 }

@@ -40,8 +40,8 @@ public class MissionScene extends BaseScene {
 	private void createMissionButtons() {
 		int delta = 0;
 		int currentMissionCount = missionManager.getMissions().size() >= missionCountInScene ? missionCountInScene : missionManager.getMissions().size();
-		float positionX = 0;
-		float positionY = 140;
+		float positionX = 0f;
+		float positionY = 140f;
 		for (int i = 0; i < currentMissionCount; i++) {
 			if (missionManager.getMissions().get(i).isActive()) {
 				missionButtons.add(new MissionButton(missionManager.getMissions().get(i), 0, 0, resourceManager.missionActiveRegion));
@@ -49,10 +49,10 @@ public class MissionScene extends BaseScene {
 				missionButtons.add(new MissionButton(missionManager.getMissions().get(i), 0, 0, resourceManager.missionDisactiveRegion));
 			}
 			if (i != 0 && i % missionCountInRow == 0) {
-				positionY += missionButtons.get(i).getHeight() + 5;
+				positionY += missionButtons.get(i).getHeight() + 5f;
 				delta += missionCountInRow;
 			}
-			positionX = (missionButtons.get(i).getWidth() + 5) * (i - delta) + 15;
+			positionX = (missionButtons.get(i).getWidth() + 5f) * (i - delta) + 15f;
 			missionButtons.get(i).setPosition(positionX, positionY);
 			attachChild(missionButtons.get(i));
 			registerTouchArea(missionButtons.get(i));
