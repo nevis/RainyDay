@@ -14,9 +14,8 @@ import org.andengine.opengl.texture.atlas.buildable.builder.BlackPawnTextureAtla
 import org.andengine.opengl.texture.atlas.buildable.builder.ITextureAtlasBuilder.TextureAtlasBuilderException;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.vbo.VertexBufferObjectManager;
+import org.andengine.util.color.Color;
 import org.andengine.util.debug.Debug;
-
-import android.graphics.Color;
 
 import ua.nevis.rainyday.RainyDayActivity;
 
@@ -113,6 +112,8 @@ public class ResourceManager {
 	public ITextureRegion starYellowRegion;
 	public ITextureRegion starGreyRegion;
 	public Font paintdrpFont;
+	public final Color COLOR_BLUE = new Color(0/255f, 33/255f, 255/255f);
+	public final Color COLOR_GREY = new Color(150/255f, 150/255f, 150/255f);
 
 	public void loadMissionResource() {
 		// textures
@@ -132,7 +133,7 @@ public class ResourceManager {
 		// fonts
 		FontFactory.setAssetBasePath(FONT_PATH);
 		final ITexture fontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR);
-		paintdrpFont = FontFactory.createFromAsset(activity.getFontManager(), fontTexture, activity.getAssets(), FONT_PAINTDRP, 24, true, Color.WHITE);
+		paintdrpFont = FontFactory.createFromAsset(activity.getFontManager(), fontTexture, activity.getAssets(), FONT_PAINTDRP, 24, true, android.graphics.Color.WHITE);
 		paintdrpFont.load();
 	}
 
