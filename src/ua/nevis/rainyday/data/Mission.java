@@ -50,7 +50,11 @@ public class Mission {
 	}
 
 	public void setStarCount(int starCount) {
-		this.starCount = starCount;
+		if (starCount > 3) {
+			this.starCount = 3;
+		} else {
+			this.starCount = starCount;
+		}
 	}
 
 	public int getMaxDropCount() {

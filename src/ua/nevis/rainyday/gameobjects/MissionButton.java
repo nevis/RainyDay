@@ -32,28 +32,28 @@ public class MissionButton extends Sprite {
 	private void setMissionInfo() {
 		Color color = null;
 		if (mission.isActive()) {
-			color = new Color(0, 33, 255);
+			color = new Color(0/255f, 33/255f, 255/255f);
 		} else {
-			color = new Color(150, 150, 150);
+			color = new Color(150/255f, 150/255f, 150/255f);
 		}
 		// mission text
 		textMission = new Text(0, 0, resourceManager.paintdrpFont, TXT_MISSION, resourceManager.vboManager);
-		textMission.setPosition((getWidth() - textMission.getWidth()) / 2, 5);
+		textMission.setPosition((getWidth() - textMission.getWidth()) / 2, 10);
 		textMission.setColor(color);
 		attachChild(textMission);
 		// mission number
 		valueMission = new Text(0, 0, resourceManager.paintdrpFont, Integer.toString(mission.getMissionNumber()), resourceManager.vboManager);
-		valueMission.setPosition((getWidth() - valueMission.getWidth()) / 2, textMission.getY() + textMission.getHeight() + 3);
+		valueMission.setPosition((getWidth() - valueMission.getWidth()) / 2, textMission.getY() + textMission.getHeight() + 8);
 		valueMission.setColor(color);
 		attachChild(valueMission);
 		// score text
 		textScore = new Text(0, 0, resourceManager.paintdrpFont, TXT_SCORE, resourceManager.vboManager);
-		textScore.setPosition((getWidth() - textScore.getWidth()) / 2, valueMission.getY() + valueMission.getHeight() + 3);
+		textScore.setPosition((getWidth() - textScore.getWidth()) / 2, valueMission.getY() + valueMission.getHeight() + 8);
 		textScore.setColor(color);
 		attachChild(textScore);
 		// score value
 		valueScore = new Text(0, 0, resourceManager.paintdrpFont, Integer.toString(mission.getScoreValue()), resourceManager.vboManager);
-		valueScore.setPosition((getWidth() - valueScore.getWidth()) / 2, textScore.getY() + textScore.getHeight() + 3);
+		valueScore.setPosition((getWidth() - valueScore.getWidth()) / 2, textScore.getY() + textScore.getHeight() + 8);
 		valueScore.setColor(color);
 		attachChild(valueScore);
 	}
@@ -61,7 +61,7 @@ public class MissionButton extends Sprite {
 	private void setStar() {
 		int starCount = mission.getStarCount();
 		float positionX;
-		float positionY = getHeight() - 37f;
+		float positionY = getHeight() - 40f;
 		for (int i = 0; i < 3; i++) {
 			if (starCount == 0) {
 				stars[i] = new Sprite(0, 0, resourceManager.starGreyRegion, resourceManager.vboManager);
