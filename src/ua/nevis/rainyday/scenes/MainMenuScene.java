@@ -8,7 +8,6 @@ import org.andengine.entity.scene.menu.item.SpriteMenuItem;
 import org.andengine.entity.scene.menu.item.decorator.ScaleMenuItemDecorator;
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.opengl.util.GLState;
-
 import ua.nevis.rainyday.managers.SceneManager;
 
 public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener {
@@ -66,7 +65,7 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 
 	@Override
 	public void onBackKeyPressed() {
-
+		// TODO Auto-generated method stub
 	}
 
 	@Override

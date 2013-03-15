@@ -6,7 +6,9 @@ import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.util.GLState;
 import ua.nevis.rainyday.data.Mission;
+import ua.nevis.rainyday.managers.MissionManager;
 import ua.nevis.rainyday.managers.ResourceManager;
+import ua.nevis.rainyday.managers.SceneManager;
 
 public class MissionButton extends Sprite {
 	private final String TXT_MISSION = "mission";
@@ -32,22 +34,22 @@ public class MissionButton extends Sprite {
 		if (mission.isActive()) {
 			// mission text
 			textMission = new Text(0, 0, resourceManager.paintdrpFont, TXT_MISSION, resourceManager.vboManager);
-			textMission.setPosition((getWidth() - textMission.getWidth()) / 2, 10);
+			textMission.setPosition((getWidth() - textMission.getWidth()) / 2, 10f);
 			textMission.setColor(resourceManager.COLOR_BLUE);
 			attachChild(textMission);
 			// mission number
-			valueMission = new Text(0, 0, resourceManager.paintdrpFont, Integer.toString(mission.getMissionNumber()), resourceManager.vboManager);
-			valueMission.setPosition((getWidth() - valueMission.getWidth()) / 2, textMission.getY() + textMission.getHeight() + 8);
+			valueMission = new Text(0, 0, resourceManager.paintdrpFont, mission.getMissionName(), resourceManager.vboManager);
+			valueMission.setPosition((getWidth() - valueMission.getWidth()) / 2, textMission.getY() + textMission.getHeight() + 8f);
 			valueMission.setColor(resourceManager.COLOR_BLUE);
 			attachChild(valueMission);
 			// score text
 			textScore = new Text(0, 0, resourceManager.paintdrpFont, TXT_SCORE, resourceManager.vboManager);
-			textScore.setPosition((getWidth() - textScore.getWidth()) / 2, valueMission.getY() + valueMission.getHeight() + 8);
+			textScore.setPosition((getWidth() - textScore.getWidth()) / 2, valueMission.getY() + valueMission.getHeight() + 8f);
 			textScore.setColor(resourceManager.COLOR_BLUE);
 			attachChild(textScore);
 			// score value
 			valueScore = new Text(0, 0, resourceManager.paintdrpFont, Integer.toString(mission.getScoreValue()), resourceManager.vboManager);
-			valueScore.setPosition((getWidth() - valueScore.getWidth()) / 2, textScore.getY() + textScore.getHeight() + 8);
+			valueScore.setPosition((getWidth() - valueScore.getWidth()) / 2, textScore.getY() + textScore.getHeight() + 8f);
 			valueScore.setColor(resourceManager.COLOR_BLUE);
 			attachChild(valueScore);
 			setStar();
@@ -64,14 +66,14 @@ public class MissionButton extends Sprite {
 		int starCount = mission.getStarCount();
 		float positionX;
 		float positionY = getHeight() - 40f;
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < stars.length; i++) {
 			if (starCount == 0) {
 				stars[i] = new Sprite(0, 0, resourceManager.starGreyRegion, resourceManager.vboManager);
 			} else {
 				stars[i] = new Sprite(0, 0, resourceManager.starYellowRegion, resourceManager.vboManager);
 				starCount -= 1;
 			}
-			positionX = 23.5f + (stars[i].getWidth() + 5) * i;
+			positionX = 23.5f + (stars[i].getWidth() + 5f) * i;
 			stars[i].setPosition(positionX, positionY);
 			attachChild(stars[i]);
 		}
@@ -85,10 +87,10 @@ public class MissionButton extends Sprite {
 
 	@Override
 	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-		if (pSceneTouchEvent.isActionDown()) {
-			if (mission.isActive()) {
-				// start mission
-			}
+		if (pSceneTouchEvent.isActionUp() && mission.isActive()) {
+			MissionManager.getInstance().setCurrentMission(mission);
+			SceneManager.getInstance().createGameScene();
+			SceneManager.getInstance().disposeMissionScene();
 		}
 		return true;
 	}
@@ -122,7 +124,7 @@ public class MissionButton extends Sprite {
 	}
 
 	private void disposeStar() {
-		for (int i = 0; i < 3; i++) {
+		for (int i = 0; i < stars.length; i++) {
 			stars[i].detachSelf();
 			stars[i].dispose();
 			stars[i] = null;

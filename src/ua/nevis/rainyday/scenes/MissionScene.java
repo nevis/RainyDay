@@ -43,7 +43,7 @@ public class MissionScene extends BaseScene {
 		missionButtons = new MissionButton[to - from];
 		int delta = 0;
 		float positionX = 0f;
-		float positionY = 140f;
+		float positionY = 120f;
 		int index = 0;
 		for (int i = from; i < to; i++) {
 			index = i - from;
@@ -53,7 +53,7 @@ public class MissionScene extends BaseScene {
 				missionButtons[index] = new MissionButton(missionManager.getMissions().get(i), 0, 0, resourceManager.missionDisactiveRegion);
 			}
 			if (index != 0 && index % missionCountInRow == 0) {
-				positionY += missionButtons[index].getHeight() + BASE_OFFSET;
+				positionY += missionButtons[index].getHeight() + BASE_OFFSET * 2;
 				delta += missionCountInRow;
 			}
 			positionX = (missionButtons[index].getWidth() + BASE_OFFSET) * (index - delta) + 15f;
@@ -81,7 +81,7 @@ public class MissionScene extends BaseScene {
 		missionSwitchButtons = new MissionSwitchButton[countMissionSwitchButton];
 		float firstOffset = 0;
 		float positionX = 0;
-		float positionY = 80;
+		float positionY = 40;
 		for (int i = 0; i < countMissionSwitchButton; i++) {
 			if (i == 0) {
 				missionSwitchButtons[i] = new MissionSwitchButton(0, 0, resourceManager.starYellowRegion);
@@ -89,15 +89,15 @@ public class MissionScene extends BaseScene {
 			} else {
 				missionSwitchButtons[i] = new MissionSwitchButton(0, 0, resourceManager.starGreyRegion);
 			}
-			positionX = firstOffset + (missionSwitchButtons[i].getWidth() + BASE_OFFSET) * i;
+			positionX = firstOffset + (missionSwitchButtons[i].getWidth() + 2 * BASE_OFFSET) * i;
 			missionSwitchButtons[i].setPosition(positionX, positionY);
 			missionSwitchButtons[i].index = i;
 			if (i + 1 == countMissionSwitchButton) {
-				missionSwitchButtons[i].from = i * 10;
-				missionSwitchButtons[i].to = i * 10 + countLastMissions;
+				missionSwitchButtons[i].from = i * missionCountInScene;
+				missionSwitchButtons[i].to = i * missionCountInScene + countLastMissions;
 			} else {
-				missionSwitchButtons[i].from = i * 10;
-				missionSwitchButtons[i].to = (i + 1) * 10;
+				missionSwitchButtons[i].from = i * missionCountInScene;
+				missionSwitchButtons[i].to = (i + 1) * missionCountInScene;
 			}
 			attachChild(missionSwitchButtons[i]);
 			registerTouchArea(missionSwitchButtons[i]);

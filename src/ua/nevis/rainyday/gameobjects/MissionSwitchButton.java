@@ -26,7 +26,7 @@ public class MissionSwitchButton extends Sprite {
 
 	@Override
 	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-		if (pSceneTouchEvent.isActionDown()) {
+		if (pSceneTouchEvent.isActionUp()) {
 			((MissionScene) SceneManager.getInstance().getCurrentScene()).touchToMissionSwitchButton(index);
 		}
 		return true;

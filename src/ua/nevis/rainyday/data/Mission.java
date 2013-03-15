@@ -1,20 +1,23 @@
 package ua.nevis.rainyday.data;
 
-public class Mission {
+import java.io.Serializable;
+
+public class Mission implements Serializable {
+	private static final long serialVersionUID = -5454863093402565470L;
 	private boolean active;
-	private int missionNumber;
+	private String missionName;
 	private int scoreValue;
 	private int starCount;
 	private int maxDropCount;
 	private int completeDropCount;
 
 	public Mission() {
-		this(false, 0, 0, 0);
+		this(false, "none", 0, 0);
 	}
 
-	public Mission(boolean active, int missionNumber, int maxDropCount, int completeDropCount) {
+	public Mission(boolean active, String missionName, int maxDropCount, int completeDropCount) {
 		this.active = active;
-		this.missionNumber = missionNumber;
+		this.missionName = missionName;
 		this.maxDropCount = maxDropCount;
 		this.completeDropCount = completeDropCount;
 		this.scoreValue = 0;
@@ -29,12 +32,12 @@ public class Mission {
 		this.active = active;
 	}
 
-	public int getMissionNumber() {
-		return missionNumber;
+	public String getMissionName() {
+		return missionName;
 	}
 
-	public void setMissionNumber(int missionNumber) {
-		this.missionNumber = missionNumber;
+	public void setMissionNumber(String missionName) {
+		this.missionName = missionName;
 	}
 
 	public int getScoreValue() {

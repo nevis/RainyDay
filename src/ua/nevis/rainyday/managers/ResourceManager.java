@@ -58,9 +58,9 @@ public class ResourceManager {
 	}
 
 	public void unloadSplashResource() {
+		splashRegion = null;
 		splashTA.unload();
 		splashTA = null;
-		splashRegion = null;
 	}
 
 	/*
@@ -89,11 +89,11 @@ public class ResourceManager {
 	}
 
 	public void unloadMainMenuResource() {
-		menuTA.unload();
-		menuTA = null;
 		backgroundMenuRegion = null;
 		playBtnRegion = null;
 		exitRtnRegion = null;
+		menuTA.unload();
+		menuTA = null;
 	}
 
 	/*
@@ -112,8 +112,8 @@ public class ResourceManager {
 	public ITextureRegion starYellowRegion;
 	public ITextureRegion starGreyRegion;
 	public Font paintdrpFont;
-	public final Color COLOR_BLUE = new Color(0/255f, 33/255f, 255/255f);
-	public final Color COLOR_GREY = new Color(150/255f, 150/255f, 150/255f);
+	public final Color COLOR_BLUE = new Color(0 / 255f, 33 / 255f, 255 / 255f);
+	public final Color COLOR_GREY = new Color(150 / 255f, 150 / 255f, 150 / 255f);
 
 	public void loadMissionResource() {
 		// textures
@@ -138,8 +138,6 @@ public class ResourceManager {
 	}
 
 	public void unloadMissionResource() {
-		missionTA.unload();
-		missionTA = null;
 		backgroundMissionRegion = null;
 		missionActiveRegion = null;
 		missionDisactiveRegion = null;
@@ -147,5 +145,33 @@ public class ResourceManager {
 		starGreyRegion = null;
 		paintdrpFont.unload();
 		paintdrpFont = null;
+		missionTA.unload();
+		missionTA = null;
 	}
+
+	/*
+	 * Game resource
+	 */
+	private final String IMG_BACKGROUND_GAME = "background.png";
+	private BuildableBitmapTextureAtlas gameTA;
+	public ITextureRegion backgroundGameRegion;
+
+	public void loadGameResource() {
+		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(GRAPHICS_PATH);
+		gameTA = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
+		backgroundGameRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTA, activity, IMG_BACKGROUND_GAME);
+		try {
+			gameTA.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
+			gameTA.load();
+		} catch (TextureAtlasBuilderException e) {
+			Debug.e(e);
+		}
+	}
+
+	public void unloadGameResource() {
+		backgroundGameRegion = null;
+		gameTA.unload();
+		gameTA = null;
+	}
+
 }
