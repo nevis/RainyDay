@@ -58,7 +58,7 @@ public class MissionScene extends BaseScene {
 			}
 			positionX = (missionButtons[index].getWidth() + BASE_OFFSET) * (index - delta) + 15f;
 			missionButtons[index].setPosition(positionX, positionY);
-			attachChild(missionButtons[index]);
+			background.attachChild(missionButtons[index]);
 			registerTouchArea(missionButtons[index]);
 		}
 	}
@@ -99,7 +99,7 @@ public class MissionScene extends BaseScene {
 				missionSwitchButtons[i].from = i * missionCountInScene;
 				missionSwitchButtons[i].to = (i + 1) * missionCountInScene;
 			}
-			attachChild(missionSwitchButtons[i]);
+			background.attachChild(missionSwitchButtons[i]);
 			registerTouchArea(missionSwitchButtons[i]);
 		}
 	}
@@ -123,7 +123,7 @@ public class MissionScene extends BaseScene {
 			unregisterTouchArea(missionSwitchButtons[currentActiveMissionSwitchButton]);
 			missionSwitchButtons[currentActiveMissionSwitchButton].disposeButton();
 			missionSwitchButtons[currentActiveMissionSwitchButton] = inactiveButton;
-			attachChild(missionSwitchButtons[currentActiveMissionSwitchButton]);
+			background.attachChild(missionSwitchButtons[currentActiveMissionSwitchButton]);
 			registerTouchArea(missionSwitchButtons[currentActiveMissionSwitchButton]);
 			// inactive button set to current active switch
 			currentActiveMissionSwitchButton = indexButton;
@@ -135,7 +135,7 @@ public class MissionScene extends BaseScene {
 			unregisterTouchArea(missionSwitchButtons[currentActiveMissionSwitchButton]);
 			missionSwitchButtons[currentActiveMissionSwitchButton].disposeButton();
 			missionSwitchButtons[currentActiveMissionSwitchButton] = activeButton;
-			attachChild(missionSwitchButtons[currentActiveMissionSwitchButton]);
+			background.attachChild(missionSwitchButtons[currentActiveMissionSwitchButton]);
 			registerTouchArea(missionSwitchButtons[currentActiveMissionSwitchButton]);
 			// set mission buttons
 			disposeMissionButtons();

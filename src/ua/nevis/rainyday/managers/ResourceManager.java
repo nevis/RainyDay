@@ -153,13 +153,19 @@ public class ResourceManager {
 	 * Game resource
 	 */
 	private final String IMG_BACKGROUND_GAME = "background.png";
+	private final String IMG_SKY = "sky.png";
+	private final String IMG_PAUSE_BTN = "pause_btn.png";
 	private BuildableBitmapTextureAtlas gameTA;
 	public ITextureRegion backgroundGameRegion;
+	public ITextureRegion skyGameRegion;
+	public ITextureRegion pauseBtnRegion;
 
 	public void loadGameResource() {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(GRAPHICS_PATH);
 		gameTA = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
 		backgroundGameRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTA, activity, IMG_BACKGROUND_GAME);
+		skyGameRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTA, activity, IMG_SKY);
+		pauseBtnRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTA, activity, IMG_PAUSE_BTN);
 		try {
 			gameTA.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
 			gameTA.load();
@@ -170,6 +176,7 @@ public class ResourceManager {
 
 	public void unloadGameResource() {
 		backgroundGameRegion = null;
+		pauseBtnRegion = null;
 		gameTA.unload();
 		gameTA = null;
 	}

@@ -42,18 +42,19 @@ public class MissionManager {
 	 */
 	@SuppressWarnings("unchecked")
 	public void loadMission() {
+		createMissions();
 		try {
 			FileInputStream fis = ResourceManager.getInstance().activity.openFileInput(FILE_NAME);
 			ObjectInputStream is = new ObjectInputStream(fis);
 			ArrayList<Mission> loadMissions = (ArrayList<Mission>) is.readObject();
 			is.close();
 			if (loadMissions != null && loadMissions.size() > 0) {
-				missions = new ArrayList<Mission>(loadMissions);
-			} else {
-				createMissions();
+				for (int i = 0; i < missions.size(); i++) {
+					missions.set(i, loadMissions.get(i));
+				}
 			}
 		} catch (Exception e) {
-			createMissions();
+			//
 		}
 	}
 

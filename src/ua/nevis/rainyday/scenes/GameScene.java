@@ -1,33 +1,63 @@
 package ua.nevis.rainyday.scenes;
 
-import org.andengine.engine.camera.Camera;
+import org.andengine.engine.camera.hud.HUD;
+import org.andengine.entity.scene.background.AutoParallaxBackground;
+import org.andengine.entity.scene.background.ParallaxBackground.ParallaxEntity;
 import org.andengine.entity.sprite.Sprite;
-import org.andengine.opengl.util.GLState;
 
+import ua.nevis.rainyday.gameobjects.PauseButton;
 import ua.nevis.rainyday.managers.MissionManager;
 import ua.nevis.rainyday.managers.SceneManager;
 
 public class GameScene extends BaseScene {
 	private MissionManager missionManager;
-	private Sprite background;
+	private HUD hud;
+	private PauseButton pauseButton;
+	private AutoParallaxBackground background;
 
 	@Override
 	public void createScene() {
 		missionManager = MissionManager.getInstance();
-		background = new Sprite(0, 0, resourceManager.backgroundGameRegion, vboManager) {
-			@Override
-			protected void preDraw(GLState pGLState, Camera pCamera) {
-				super.preDraw(pGLState, pCamera);
-				pGLState.enableDither();
-			}
-		};
-		attachChild(background);
+		createBackground();
+		createHud();
+	}
+	
+	private void createBackground() {
+		background = new AutoParallaxBackground(0, 0, 0, 5);
+		background.attachParallaxEntity(new ParallaxEntity(0.0f, new Sprite(0, 0, resourceManager.backgroundGameRegion, vboManager)));
+		background.attachParallaxEntity(new ParallaxEntity(-5.0f, new Sprite(0, 0, resourceManager.skyGameRegion, vboManager)));
+		setBackground(background);
+	}
+	
+	private void disposeBackground() {
+		background = null;
+	}
+	
+	private void createHud() {
+		hud = new HUD();
+		// pause button
+		pauseButton = new PauseButton();
+		pauseButton.setPosition(camera.getWidth() - pauseButton.getWidth() - 10, 10);
+		hud.attachChild(pauseButton);
+		hud.registerTouchArea(pauseButton);
+		// ----
+		camera.setHUD(hud);
+	}
+	
+	private void disposeHud() {
+		// pause button
+		hud.unregisterTouchArea(pauseButton);
+		pauseButton.disposeButton();
+		// ----
+		hud.detachSelf();
+		hud.dispose();
+		hud = null;
 	}
 
 	@Override
 	public void disposeScene() {
-		background.detachSelf();
-		background.dispose();
+		disposeHud();
+		disposeBackground();
 		this.detachSelf();
 		this.dispose();
 	}
@@ -39,13 +69,29 @@ public class GameScene extends BaseScene {
 
 	@Override
 	public void onBackKeyPressed() {
+		resumeGame();
 		SceneManager.getInstance().createMainMenuScene();
 		SceneManager.getInstance().disposeGameScene();
 	}
 
 	@Override
 	public void onMenuKeyPressed() {
+		resumeGame();
 		missionManager.saveMission();
+	}
+	
+	public void pauseGame() {
+		if (engine.isRunning()) {
+			engine.stop();
+			pauseButton.setVisible(false);
+		}
+	}
+	
+	public void resumeGame() {
+		if (!engine.isRunning()) {
+			engine.start();
+			pauseButton.setVisible(true);
+		}
 	}
 
 }
