@@ -2,7 +2,6 @@ package ua.nevis.rainyday.gameobjects;
 
 import org.andengine.entity.sprite.Sprite;
 import org.andengine.entity.text.Text;
-import org.andengine.input.touch.TouchEvent;
 import org.andengine.opengl.texture.region.ITextureRegion;
 import org.andengine.opengl.util.GLState;
 import ua.nevis.rainyday.data.Mission;
@@ -27,10 +26,10 @@ public class MissionButton extends Sprite {
 		super(x, y, textureRegion, ResourceManager.getInstance().vboManager);
 		this.mission = mission;
 		this.resourceManager = ResourceManager.getInstance();
-		setMissionInfo();
+		createMissionInfo();
 	}
 
-	private void setMissionInfo() {
+	private void createMissionInfo() {
 		if (mission.isActive()) {
 			// mission text
 			textMission = new Text(0, 0, resourceManager.paintdrpFont, TXT_MISSION, resourceManager.vboManager);
@@ -52,7 +51,7 @@ public class MissionButton extends Sprite {
 			valueScore.setPosition((getWidth() - valueScore.getWidth()) / 2, textScore.getY() + textScore.getHeight() + 8f);
 			valueScore.setColor(resourceManager.COLOR_BLUE);
 			attachChild(valueScore);
-			setStar();
+			createStar();
 		} else {
 			textLocked = new Text(0, 0, resourceManager.paintdrpFont, TXT_LOCKED, resourceManager.vboManager);
 			textLocked.setPosition((getWidth() - textLocked.getWidth()) / 2, (getHeight() - textLocked.getHeight()) / 2);
@@ -62,7 +61,7 @@ public class MissionButton extends Sprite {
 
 	}
 
-	private void setStar() {
+	private void createStar() {
 		int starCount = mission.getStarCount();
 		float positionX;
 		float positionY = getHeight() - 40f;
@@ -85,14 +84,12 @@ public class MissionButton extends Sprite {
 		pGLState.enableDither();
 	}
 
-	@Override
-	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
-		if (pSceneTouchEvent.isActionUp() && mission.isActive()) {
+	public void action() {
+		if (mission.isActive()) {
 			MissionManager.getInstance().setCurrentMission(mission);
 			SceneManager.getInstance().createGameScene();
 			SceneManager.getInstance().disposeMissionScene();
 		}
-		return true;
 	}
 
 	public void disposeButton() {

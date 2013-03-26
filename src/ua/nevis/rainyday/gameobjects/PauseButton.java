@@ -25,9 +25,8 @@ public class PauseButton extends Sprite {
 	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 		if (pSceneTouchEvent.isActionDown()) {
 			((GameScene) SceneManager.getInstance().getCurrentScene()).pauseGame();
-			return true;
 		}
-		return false;
+		return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
 	}
 	
 	public void disposeButton() {

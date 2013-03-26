@@ -111,5 +111,6 @@ public class MissionManager {
 		missions.add(new Mission(false, "1-35", 140, 70));
 		missions.add(new Mission(false, "1-36", 140, 70));
 		missions.add(new Mission(false, "1-37", 140, 70));
+		missions.add(new Mission(false, "1-38", 140, 70));
 	}
 }
