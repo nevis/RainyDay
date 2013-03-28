@@ -32,28 +32,28 @@ public class MissionButton extends Sprite {
 	private void createMissionInfo() {
 		if (mission.isActive()) {
 			// mission text
-			textMission = new Text(0, 0, resourceManager.paintdrpFont, TXT_MISSION, resourceManager.vboManager);
+			textMission = new Text(0, 0, resourceManager.missionPaintdrpFont, TXT_MISSION, resourceManager.vboManager);
 			textMission.setPosition((getWidth() - textMission.getWidth()) / 2, 10f);
 			textMission.setColor(resourceManager.COLOR_BLUE);
 			attachChild(textMission);
 			// mission number
-			valueMission = new Text(0, 0, resourceManager.paintdrpFont, mission.getMissionName(), resourceManager.vboManager);
+			valueMission = new Text(0, 0, resourceManager.missionPaintdrpFont, mission.getMissionName(), resourceManager.vboManager);
 			valueMission.setPosition((getWidth() - valueMission.getWidth()) / 2, textMission.getY() + textMission.getHeight() + 8f);
 			valueMission.setColor(resourceManager.COLOR_BLUE);
 			attachChild(valueMission);
 			// score text
-			textScore = new Text(0, 0, resourceManager.paintdrpFont, TXT_SCORE, resourceManager.vboManager);
+			textScore = new Text(0, 0, resourceManager.missionPaintdrpFont, TXT_SCORE, resourceManager.vboManager);
 			textScore.setPosition((getWidth() - textScore.getWidth()) / 2, valueMission.getY() + valueMission.getHeight() + 8f);
 			textScore.setColor(resourceManager.COLOR_BLUE);
 			attachChild(textScore);
 			// score value
-			valueScore = new Text(0, 0, resourceManager.paintdrpFont, Integer.toString(mission.getScoreValue()), resourceManager.vboManager);
+			valueScore = new Text(0, 0, resourceManager.missionPaintdrpFont, Integer.toString(mission.getScoreValue()), resourceManager.vboManager);
 			valueScore.setPosition((getWidth() - valueScore.getWidth()) / 2, textScore.getY() + textScore.getHeight() + 8f);
 			valueScore.setColor(resourceManager.COLOR_BLUE);
 			attachChild(valueScore);
 			createStar();
 		} else {
-			textLocked = new Text(0, 0, resourceManager.paintdrpFont, TXT_LOCKED, resourceManager.vboManager);
+			textLocked = new Text(0, 0, resourceManager.missionPaintdrpFont, TXT_LOCKED, resourceManager.vboManager);
 			textLocked.setPosition((getWidth() - textLocked.getWidth()) / 2, (getHeight() - textLocked.getHeight()) / 2);
 			textLocked.setColor(resourceManager.COLOR_GREY);
 			attachChild(textLocked);

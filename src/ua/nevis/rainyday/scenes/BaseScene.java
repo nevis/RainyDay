@@ -33,6 +33,4 @@ public abstract class BaseScene extends Scene {
 
 	public abstract void onBackKeyPressed();
 
-	public abstract void onMenuKeyPressed();
-
 }

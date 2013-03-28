@@ -23,6 +23,8 @@ public class ResourceManager {
 	private static ResourceManager INSTANCE = new ResourceManager();
 	private final String GRAPHICS_PATH = "gfx/";
 	private final String FONT_PATH = "font/";
+	public final Color COLOR_BLUE = new Color(0 / 255f, 33 / 255f, 255 / 255f);
+	public final Color COLOR_GREY = new Color(150 / 255f, 150 / 255f, 150 / 255f);
 	public Engine engine;
 	public RainyDayActivity activity;
 	public Camera camera;
@@ -111,9 +113,7 @@ public class ResourceManager {
 	public ITextureRegion missionDisactiveRegion;
 	public ITextureRegion starYellowRegion;
 	public ITextureRegion starGreyRegion;
-	public Font paintdrpFont;
-	public final Color COLOR_BLUE = new Color(0 / 255f, 33 / 255f, 255 / 255f);
-	public final Color COLOR_GREY = new Color(150 / 255f, 150 / 255f, 150 / 255f);
+	public Font missionPaintdrpFont;
 
 	public void loadMissionResource() {
 		// textures
@@ -133,20 +133,22 @@ public class ResourceManager {
 		// fonts
 		FontFactory.setAssetBasePath(FONT_PATH);
 		final ITexture fontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR);
-		paintdrpFont = FontFactory.createFromAsset(activity.getFontManager(), fontTexture, activity.getAssets(), FONT_PAINTDRP, 24, true, android.graphics.Color.WHITE);
-		paintdrpFont.load();
+		missionPaintdrpFont = FontFactory.createFromAsset(activity.getFontManager(), fontTexture, activity.getAssets(), FONT_PAINTDRP, 24, true, android.graphics.Color.WHITE);
+		missionPaintdrpFont.load();
 	}
 
 	public void unloadMissionResource() {
+		// textures
 		backgroundMissionRegion = null;
 		missionActiveRegion = null;
 		missionDisactiveRegion = null;
 		starYellowRegion = null;
 		starGreyRegion = null;
-		paintdrpFont.unload();
-		paintdrpFont = null;
 		missionTA.unload();
 		missionTA = null;
+		// fonts
+		missionPaintdrpFont.unload();
+		missionPaintdrpFont = null;
 	}
 
 	/*
@@ -154,17 +156,31 @@ public class ResourceManager {
 	 */
 	private final String IMG_BACKGROUND_GAME = "background.png";
 	private final String IMG_SKY = "sky.png";
+	private final String IMG_GAME_MENU_RECT = "game_menu_rect.png";
+	private final String IMG_GAME_PLAY_BTN = "game_menu_play_btn.png";
+	private final String IMG_GAME_RESTART_BTN = "game_menu_restart_btn.png";
+	private final String IMG_GAME_BACK_BTN = "game_menu_back_btn.png";
 	private final String IMG_PAUSE_BTN = "pause_btn.png";
 	private BuildableBitmapTextureAtlas gameTA;
 	public ITextureRegion backgroundGameRegion;
 	public ITextureRegion skyGameRegion;
+	public ITextureRegion gameMenuRectRegion;
+	public ITextureRegion gameMenuPlayBtnRegion;
+	public ITextureRegion gameMenuRestartBtnRegion;
+	public ITextureRegion gameMenuBackBtnRegion;
 	public ITextureRegion pauseBtnRegion;
+	public Font gamePaintdrpFont;
 
 	public void loadGameResource() {
+		// textures
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(GRAPHICS_PATH);
 		gameTA = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
 		backgroundGameRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTA, activity, IMG_BACKGROUND_GAME);
 		skyGameRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTA, activity, IMG_SKY);
+		gameMenuRectRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTA, activity, IMG_GAME_MENU_RECT);
+		gameMenuPlayBtnRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTA, activity, IMG_GAME_PLAY_BTN);
+		gameMenuRestartBtnRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTA, activity, IMG_GAME_RESTART_BTN);
+		gameMenuBackBtnRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTA, activity, IMG_GAME_BACK_BTN);
 		pauseBtnRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(gameTA, activity, IMG_PAUSE_BTN);
 		try {
 			gameTA.build(new BlackPawnTextureAtlasBuilder<IBitmapTextureAtlasSource, BitmapTextureAtlas>(0, 1, 0));
@@ -172,13 +188,26 @@ public class ResourceManager {
 		} catch (TextureAtlasBuilderException e) {
 			Debug.e(e);
 		}
+		// fonts
+		FontFactory.setAssetBasePath(FONT_PATH);
+		final ITexture fontTexture = new BitmapTextureAtlas(activity.getTextureManager(), 256, 256, TextureOptions.BILINEAR);
+		gamePaintdrpFont = FontFactory.createFromAsset(activity.getFontManager(), fontTexture, activity.getAssets(), FONT_PAINTDRP, 32, true, android.graphics.Color.WHITE);
+		gamePaintdrpFont.load();
 	}
 
 	public void unloadGameResource() {
+		// textures
 		backgroundGameRegion = null;
+		gameMenuRectRegion = null;
+		gameMenuPlayBtnRegion = null;
+		gameMenuRestartBtnRegion = null;
+		gameMenuBackBtnRegion = null;
 		pauseBtnRegion = null;
 		gameTA.unload();
 		gameTA = null;
+		// fonts
+		gamePaintdrpFont.unload();
+		gamePaintdrpFont = null;
 	}
 
 }

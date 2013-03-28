@@ -35,14 +35,6 @@ public class SplashScene extends BaseScene {
 
 	@Override
 	public void onBackKeyPressed() {
-		// TODO Auto-generated method stub
 
 	}
-
-	@Override
-	public void onMenuKeyPressed() {
-		// TODO Auto-generated method stub
-
-	}
-
 }

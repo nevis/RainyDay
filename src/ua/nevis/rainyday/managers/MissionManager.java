@@ -13,6 +13,7 @@ public class MissionManager {
 	private static MissionManager INSTANCE = new MissionManager();
 	private ArrayList<Mission> missions;
 	private Mission currentMission;
+	private int currentScore;
 
 	private MissionManager() {
 
@@ -35,6 +36,15 @@ public class MissionManager {
 
 	public void setCurrentMission(Mission currentMission) {
 		this.currentMission = currentMission;
+		currentScore = 0;
+	}
+
+	public int getCurrentScore() {
+		return currentScore;
+	}
+
+	public void plusToCurrentScore(int score) {
+		this.currentScore += score;
 	}
 
 	/*

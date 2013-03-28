@@ -12,8 +12,6 @@ import org.andengine.engine.options.resolutionpolicy.RatioResolutionPolicy;
 import org.andengine.entity.scene.Scene;
 import org.andengine.ui.activity.BaseGameActivity;
 
-import android.view.KeyEvent;
-
 import ua.nevis.rainyday.managers.MissionManager;
 import ua.nevis.rainyday.managers.ResourceManager;
 import ua.nevis.rainyday.managers.SceneManager;
@@ -70,15 +68,5 @@ public class RainyDayActivity extends BaseGameActivity {
 	@Override
 	public void onBackPressed() {
 		sceneManager.getCurrentScene().onBackKeyPressed();
-	}
-
-	@Override
-	public boolean onKeyDown(int keyCode, KeyEvent event) {
-		if (KeyEvent.KEYCODE_MENU == keyCode) {
-			sceneManager.getCurrentScene().onMenuKeyPressed();
-			return true;
-		} else {
-			return super.onKeyDown(keyCode, event);
-		}
 	}
 }

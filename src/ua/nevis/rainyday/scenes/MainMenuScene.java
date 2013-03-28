@@ -42,7 +42,6 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 		menuScene.addMenuItem(exitMenuItem);
 		menuScene.buildAnimations();
 		menuScene.setBackgroundEnabled(false);
-		// playMenuItem.setPosition(playMenuItem.getX(), playMenuItem.getY());
 		exitMenuItem.setPosition(exitMenuItem.getX(), exitMenuItem.getY() + 10);
 		menuScene.setOnMenuItemClickListener(this);
 		setChildScene(menuScene);
@@ -65,11 +64,6 @@ public class MainMenuScene extends BaseScene implements IOnMenuItemClickListener
 
 	@Override
 	public void onBackKeyPressed() {
-		// TODO Auto-generated method stub
-	}
-
-	@Override
-	public void onMenuKeyPressed() {
 		// TODO Auto-generated method stub
 	}
 

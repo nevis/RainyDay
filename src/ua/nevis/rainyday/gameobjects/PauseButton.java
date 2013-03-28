@@ -7,7 +7,6 @@ import ua.nevis.rainyday.managers.ResourceManager;
 import ua.nevis.rainyday.managers.SceneManager;
 import ua.nevis.rainyday.scenes.GameScene;
 
-
 public class PauseButton extends Sprite {
 
 	public PauseButton() {
@@ -24,11 +23,11 @@ public class PauseButton extends Sprite {
 	@Override
 	public boolean onAreaTouched(TouchEvent pSceneTouchEvent, float pTouchAreaLocalX, float pTouchAreaLocalY) {
 		if (pSceneTouchEvent.isActionDown()) {
-			((GameScene) SceneManager.getInstance().getCurrentScene()).pauseGame();
+			((GameScene) SceneManager.getInstance().getCurrentScene()).pauseButtonAction();
 		}
 		return super.onAreaTouched(pSceneTouchEvent, pTouchAreaLocalX, pTouchAreaLocalY);
 	}
-	
+
 	public void disposeButton() {
 		this.detachSelf();
 		this.dispose();

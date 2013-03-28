@@ -28,7 +28,8 @@ public class MissionScene extends BaseScene {
 		createMissionSwitchButtons();
 		findLastMissionPage();
 		activeMissionSwitchButton.setPosition(missionSwitchButtons[currentMissionIndex].getX(), missionSwitchButtons[currentMissionIndex].getY());
-		createMissionButtons(missionSwitchButtons[currentMissionIndex].from, missionSwitchButtons[currentMissionIndex].to);
+		createMissionButtons();
+		showMissionButtons(missionSwitchButtons[currentMissionIndex].from, missionSwitchButtons[currentMissionIndex].to);
 	}
 
 	private void findLastMissionPage() {
@@ -53,26 +54,40 @@ public class MissionScene extends BaseScene {
 		attachChild(background);
 	}
 
-	private void createMissionButtons(int from, int to) {
-		missionButtons = new MissionButton[to - from];
+	private void createMissionButtons() {
+		missionButtons = new MissionButton[missionManager.getMissions().size()];
+		for (int i = 0; i < missionButtons.length; i++) {
+			if (missionManager.getMissions().get(i).isActive()) {
+				missionButtons[i] = new MissionButton(missionManager.getMissions().get(i), -100.0f, -100.0f, resourceManager.missionActiveRegion);
+			} else {
+				missionButtons[i] = new MissionButton(missionManager.getMissions().get(i), -100.0f, -100.0f, resourceManager.missionDisactiveRegion);
+			}
+			missionButtons[i].setVisible(false);
+			background.attachChild(missionButtons[i]);
+		}
+	}
+
+	private void showMissionButtons(int from, int to) {
 		int delta = 0;
 		float positionX = 0f;
 		float positionY = 120f;
 		int index = 0;
 		for (int i = from; i < to; i++) {
 			index = i - from;
-			if (missionManager.getMissions().get(i).isActive()) {
-				missionButtons[index] = new MissionButton(missionManager.getMissions().get(i), 0, 0, resourceManager.missionActiveRegion);
-			} else {
-				missionButtons[index] = new MissionButton(missionManager.getMissions().get(i), 0, 0, resourceManager.missionDisactiveRegion);
-			}
 			if (index != 0 && index % missionCountInRow == 0) {
-				positionY += missionButtons[index].getHeight() + BASE_OFFSET * 2;
+				positionY += missionButtons[i].getHeight() + BASE_OFFSET * 2;
 				delta += missionCountInRow;
 			}
-			positionX = (missionButtons[index].getWidth() + BASE_OFFSET) * (index - delta) + 15f;
-			missionButtons[index].setPosition(positionX, positionY);
-			background.attachChild(missionButtons[index]);
+			positionX = (missionButtons[i].getWidth() + BASE_OFFSET) * (index - delta) + 15f;
+			missionButtons[i].setPosition(positionX, positionY);
+			missionButtons[i].setVisible(true);
+		}
+	}
+
+	private void hideAllMissionButtons() {
+		for (int i = 0; i < missionButtons.length; i++) {
+			missionButtons[i].setVisible(false);
+			missionButtons[i].setPosition(-100f, -100f);
 		}
 	}
 
@@ -133,9 +148,9 @@ public class MissionScene extends BaseScene {
 		if (currentMissionIndex != indexButton) {
 			activeMissionSwitchButton.setPosition(missionSwitchButtons[indexButton].getX(), missionSwitchButtons[indexButton].getY());
 			currentMissionIndex = indexButton;
-			// set mission buttons
-			disposeMissionButtons();
-			createMissionButtons(missionSwitchButtons[currentMissionIndex].from, missionSwitchButtons[currentMissionIndex].to);
+			// show mission buttons
+			hideAllMissionButtons();
+			showMissionButtons(missionSwitchButtons[currentMissionIndex].from, missionSwitchButtons[currentMissionIndex].to);
 		}
 	}
 
@@ -160,18 +175,12 @@ public class MissionScene extends BaseScene {
 		SceneManager.getInstance().disposeMissionScene();
 	}
 
-	@Override
-	public void onMenuKeyPressed() {
-		SceneManager.getInstance().createMainMenuScene();
-		SceneManager.getInstance().disposeMissionScene();
-	}
-
 	/*
 	 * Scene touch
 	 */
 	private float startTouchX;
 	private boolean isSwitchMissions = false;
-	private final float SWIPE_OFFSET_X = 30f;
+	private final float SWIPE_OFFSET_X = 150f;
 
 	@Override
 	public boolean onSceneTouchEvent(TouchEvent pSceneTouchEvent) {
@@ -188,7 +197,7 @@ public class MissionScene extends BaseScene {
 		default:
 			break;
 		}
-		return super.onSceneTouchEvent(pSceneTouchEvent);
+		return true;
 	}
 
 	private void actionDown(TouchEvent pSceneTouchEvent) {
