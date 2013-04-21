@@ -58,16 +58,15 @@ public class MissionScene extends BaseScene {
 		missionButtons = new MissionButton[missionManager.getMissions().size()];
 		for (int i = 0; i < missionButtons.length; i++) {
 			if (missionManager.getMissions().get(i).isActive()) {
-				missionButtons[i] = new MissionButton(missionManager.getMissions().get(i), -100.0f, -100.0f, resourceManager.missionActiveRegion);
+				missionButtons[i] = new MissionButton(missionManager.getMissions().get(i), 0, 0, resourceManager.missionActiveRegion);
 			} else {
-				missionButtons[i] = new MissionButton(missionManager.getMissions().get(i), -100.0f, -100.0f, resourceManager.missionDisactiveRegion);
+				missionButtons[i] = new MissionButton(missionManager.getMissions().get(i), 0, 0, resourceManager.missionDisactiveRegion);
 			}
-			missionButtons[i].setVisible(false);
-			background.attachChild(missionButtons[i]);
 		}
 	}
 
 	private void showMissionButtons(int from, int to) {
+		detachAllMissionButtons();
 		int delta = 0;
 		float positionX = 0f;
 		float positionY = 120f;
@@ -81,6 +80,14 @@ public class MissionScene extends BaseScene {
 			positionX = (missionButtons[i].getWidth() + BASE_OFFSET) * (index - delta) + 15f;
 			missionButtons[i].setPosition(positionX, positionY);
 			missionButtons[i].setVisible(true);
+			background.attachChild(missionButtons[i]);
+		}
+	}
+
+	private void detachAllMissionButtons() {
+		for (int i = 0; i < missionButtons.length; i++) {
+			missionButtons[i].detachSelf();
+			missionButtons[i].setVisible(false);
 		}
 	}
 
@@ -108,11 +115,11 @@ public class MissionScene extends BaseScene {
 		float positionX = 0;
 		float positionY = 40;
 		for (int i = 0; i < countMissionSwitchButton; i++) {
-			missionSwitchButtons[i] = new MissionSwitchButton(0, 0, resourceManager.starGreyRegion);
+			missionSwitchButtons[i] = new MissionSwitchButton(0, 0, resourceManager.switchUnactiveBtnRegion);
 			if (i == 0) {
 				firstOffset = (background.getWidth() - (missionSwitchButtons[i].getWidth() * countMissionSwitchButton + (countMissionSwitchButton - 1) * BASE_OFFSET)) / 2;
 			}
-			positionX = firstOffset + (missionSwitchButtons[i].getWidth() + 2 * BASE_OFFSET) * i;
+			positionX = firstOffset + (missionSwitchButtons[i].getWidth() + 20f) * i;
 			missionSwitchButtons[i].setPosition(positionX, positionY);
 			missionSwitchButtons[i].index = i;
 			missionSwitchButtons[i].from = i * missionCountInScene;
@@ -124,7 +131,7 @@ public class MissionScene extends BaseScene {
 			background.attachChild(missionSwitchButtons[i]);
 		}
 		// ----
-		activeMissionSwitchButton = new Sprite(0, 0, resourceManager.starYellowRegion, vboManager) {
+		activeMissionSwitchButton = new Sprite(0, 0, resourceManager.switchActiveBtnRegion, vboManager) {
 			@Override
 			protected void preDraw(GLState pGLState, Camera pCamera) {
 				super.preDraw(pGLState, pCamera);

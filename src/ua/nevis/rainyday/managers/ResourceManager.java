@@ -101,7 +101,9 @@ public class ResourceManager {
 	/*
 	 * Mission resource
 	 */
-	private final String IMG_BACKGROUND_MISSION = "background.png";
+	private final String IMG_BACKGROUND_MISSION = "background_mission.png";
+	private final String IMG_SWITCH_ACTIVE_BTN = "switch_active_btn.png";
+	private final String IMG_SWITCH_UNACTIVE_BTN = "switch_unactive_btn.png";
 	private final String IMG_MISSION_ACTIVE = "mission_active_btn.png";
 	private final String IMG_MISSION_DISACTIVE = "mission_disactive_btn.png";
 	private final String IMG_STAR_YELLOW = "star_yellow.png";
@@ -109,6 +111,8 @@ public class ResourceManager {
 	private final String FONT_PAINTDRP = "Paintdrp.ttf";
 	private BuildableBitmapTextureAtlas missionTA;
 	public ITextureRegion backgroundMissionRegion;
+	public ITextureRegion switchActiveBtnRegion;
+	public ITextureRegion switchUnactiveBtnRegion;
 	public ITextureRegion missionActiveRegion;
 	public ITextureRegion missionDisactiveRegion;
 	public ITextureRegion starYellowRegion;
@@ -120,6 +124,8 @@ public class ResourceManager {
 		BitmapTextureAtlasTextureRegionFactory.setAssetBasePath(GRAPHICS_PATH);
 		missionTA = new BuildableBitmapTextureAtlas(activity.getTextureManager(), 1024, 1024, TextureOptions.BILINEAR);
 		backgroundMissionRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(missionTA, activity, IMG_BACKGROUND_MISSION);
+		switchActiveBtnRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(missionTA, activity, IMG_SWITCH_ACTIVE_BTN);
+		switchUnactiveBtnRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(missionTA, activity, IMG_SWITCH_UNACTIVE_BTN);
 		missionActiveRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(missionTA, activity, IMG_MISSION_ACTIVE);
 		missionDisactiveRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(missionTA, activity, IMG_MISSION_DISACTIVE);
 		starYellowRegion = BitmapTextureAtlasTextureRegionFactory.createFromAsset(missionTA, activity, IMG_STAR_YELLOW);
@@ -140,6 +146,8 @@ public class ResourceManager {
 	public void unloadMissionResource() {
 		// textures
 		backgroundMissionRegion = null;
+		switchActiveBtnRegion = null;
+		switchUnactiveBtnRegion = null;
 		missionActiveRegion = null;
 		missionDisactiveRegion = null;
 		starYellowRegion = null;

@@ -1,5 +1,6 @@
 bin/
 gen/
 lint.xml
+project.properties
 *.apk
 .settings/
